@@ -1,0 +1,272 @@
+<!Doctype html>
+<html>
+<head> </head>
+<body style="text-align: center; background-color: floralwhite;">
+    <h1 id="titulo" style="background-color: white; padding: 2.5%;">Separar negativos y positivos </h1>
+
+<!--Div de inicio del cuerpo de la página -->
+<div class="cuerpo" >
+
+<div class="pila" style="text-align: center; background-color: white; margin: 1%;"><h3>Pilas. Ingrese valores</h3>                      
+    <form>
+<input id="max" type="number" value="0"> 
+<button type="reset" class="btn btn-success" onclick="Agregar()">Push</button>
+<button type="button" class="btn btn-ligth" onclick="Limpiar()">Clear</button>
+</form><div style="padding-top: 5px;"></div>
+<button type="button" class="btn btn-info" onclick="PILA()">Separar (+) (-)</button>
+<button type="button" class="btn btn-danger" onclick="Quitar()">Pop</button>
+<button type="button" class="btn btn-warning" onclick="Lista()">Is_EMPTY</button>
+<button type="button" class="btn btn-primary" onclick="Ultimo()">Peek</button>
+<button type="button" class="btn btn-secondary" onclick="Cantidad()">Size</button>
+<div style="background-color: black; width: 100%; height: 2px; margin-top: 5px;"></div>
+  <p style="padding: 10px;"><b>Pilas</b></p> <p id="demo"></p>
+<p><b>Positivos</b></p> <p id="demo5"></p>
+<p><b>Negativos</b></p> <p id="demo6"></p>
+
+
+<script>
+  var pila=[];
+  var lalo=0;
+Muestra=function(){
+  var i=0;
+  var text=" ";
+  for (i = 0; i <pila.length; i++) {
+    text += i +".- "+ pila[i] + "<br>";
+    document.getElementById("demo").innerHTML = text;
+  }
+
+    if(pila.length===0){
+        document.getElementById('demo').innerHTML="Pila vacia";
+    }
+   
+}
+Agregar=function(){
+  var element = parseFloat(document.getElementById("max").value);
+  pila.push(element);
+  Muestra();
+}
+
+Quitar=function(){
+  var alex=(pila.length-1);
+   pila.splice(alex);
+
+   Muestra();
+}
+
+Limpiar=function(){
+   pila=[];
+   document.getElementById("demo5").innerHTML = "";
+   document.getElementById("demo6").innerHTML = "";
+   Muestra();
+}
+
+Lista=function(){
+  if(pila.length==0){
+   alert("TRUE" + "   "+ "la pila esta vacia");
+  }
+  else{
+   alert("FALSE" + "   " + "la pila no esta vacia");
+   }
+}
+
+Ultimo=function(){
+  alert("El ultimo valor de su pila es: " + pila[pila.length-1])
+}
+
+Cantidad=function(){
+   alert("la cantidad de valores de la pila es: " + pila.length)
+}
+
+PILA=function(){
+  var i=0;
+  var text=" ";
+  var txt="";
+
+  for (i = 0; i <pila.length; i++) {
+    if(pila[i]>=0){
+        text += i +".- "+ pila[i] + "<br>";
+        document.getElementById("demo5").innerHTML = text;
+    }
+    else{
+        txt += i +".- "+ pila[i] + "<br>";
+        document.getElementById("demo6").innerHTML = txt;
+    }
+  }
+  
+  
+}
+</script>
+
+</div>
+    <!-- Fin Del Div Pila -->
+
+<div class="cola" style="text-align: center; background-color: white; margin: 1%;"> <h3>Colas. Ingrese numeros a la lista</h3>
+<form>
+<input type="number" id="num" placeholder="Ingrese numero">
+<button onclick="agrega()" type="reset">Add</button>
+<button onclick="quitar()" type="button">Remove</button>
+<button onclick="borrar()" type="button">Clear</button>
+</form> <div style="padding-top: 5px;"></div>
+<button onclick="separar()" type="button">Separar + -</button>
+<button onclick="size()">Size</button>
+<button onclick="Mfirst()">1er Elemento</button>
+<button onclick="Mlast()">Ultimo Elemento</button>
+<div style="background-color: black; width: 100%; height: 2px; margin-top: 5px;"></div>
+<div style="padding-top: 1rem;"></div>
+<div style="display: inline-flex;">
+    <table id="result" border="1" style="text-align: center;">
+        <tr>    <th id="TorF" style="padding: 10px;">Colas. (No hay elemento)</th>  </tr>
+    </table>
+    <div style="padding-left: 2rem;"></div>
+        <table id="pos" border="1" style="visibility: hidden">
+        <tr>    <th style="padding: 10px;">Positivos</th>  </tr>
+        </table>
+        <table id="neg" border="1" style="visibility: hidden;">
+        <tr>    <th style="padding: 10px;">Negativo</th>    </tr>
+        </table>
+</div>
+<div style="padding-top: 2rem;">
+<table style="visibility: hidden;" id="FIFO-1">
+    <tr><th><h3>Numero eliminado: </h3></th> <th><h1 id="FIFO"></h1></th></tr>
+</table>
+</div>
+<script>
+let colas=[],
+    i=0,
+    m=0,
+    siOno=0,
+    positivo=0,
+    negativo=0;
+
+function agrega(){
+    let valor = document.getElementById('num').value;
+        colas.push(valor);
+
+    let table = document.getElementById('result'),
+        noCola = document.getElementById('num').value,
+        newRw = table.insertRow(1),
+        celda1 = newRw.insertCell(0);
+    celda1.innerHTML = noCola;
+    i++;
+
+    document.getElementById('TorF').innerHTML = "Colas.";
+    if(noCola>=0){positivo++;}else if(noCola<0){negativo++;}
+    if(siOno===1){
+    borraNegPos();
+    siOno=0;
+    }
+}
+function quitar(){
+    if(i>0){
+        let m=i;
+        let first = colas[0];
+        document.getElementById('FIFO').innerHTML = first;
+        document.getElementById('FIFO-1').style.visibility = "visible";
+        document.getElementById('pos').style.visibility="hidden";
+        document.getElementById('neg').style.visibility="hidden";
+
+        document.getElementById('result').deleteRow(i);
+        i=i-1;
+        colas.shift();
+        //Condicion para borrar celdas
+            if(siOno===1){
+                borraNegPos();
+                if(first>=0){positivo--;}else if(first<0){negativo--;}
+                siOno=0
+            } else{if(first>=0){positivo--;}else if(first<0){negativo--;}}
+            //Fin de la condicion
+    } else {
+        alert("No hay elementos en la cola");
+    }
+}
+function separar(){
+    //siOno es igual a 1 si le dio clic el usuario al botón separar
+    siOno=1;
+    document.getElementById('pos').style.visibility="visible";
+    document.getElementById('neg').style.visibility="visible";
+    for(let n = i;n >= 0;n--)
+        if(colas[n] >= 0){
+        let table = document.getElementById('pos'),
+            no = colas[n],
+            newRw = table.insertRow(1),
+            cel1 = newRw.insertCell(0);
+            cel1.innerHTML = no;
+        } else if(colas[n]<0){
+            let table = document.getElementById('neg'),
+                no = colas[n],
+                newRw = table.insertRow(1),
+                cel1 = newRw.insertCell(0);
+                cel1.innerHTML = no;
+        }
+}
+function size(){
+    alert("El tamaño de la cola es: " + colas.length);
+}
+function Mfirst(){
+        alert("El primer eñlemento agregado es: " + colas[0]);
+}
+function Mlast(){
+        alert("El último elemento agregado es: " + colas[colas.length-1]);
+}
+function borrar(){
+    let m = i,
+        opcion = confirm("Clicka en Aceptar o Cancelar");
+        i=0;
+        //Confirmación de borrar el array
+    if (opcion == true) {
+        //Deja el arreglo en Blanco
+        colas=[];
+        document.getElementById('TorF').innerHTML="Colas. (No hay elemento)" //Cambio de titulo
+        //Elimina las celdas creadas en la tabla donde aparecen los numeros ingresados
+        for(let n=0;n<m;n++){
+            document.getElementById('result').deleteRow(1);
+        }
+        //Manda a la funcion de borrar las celdas creadas de positivo-negativo
+        borraNegPos();
+        positivo=0;
+        negativo=0;
+	}
+}
+
+//Función para borrar las celdas creadas
+function borraNegPos(){
+    for(let n=0;n<positivo;n++){
+            document.getElementById('pos').deleteRow(1);
+        document.getElementById('pos').style.visibility="hidden";
+        }
+        for(let n=0;n<negativo;n++){
+            document.getElementById('neg').deleteRow(1);
+        document.getElementById('neg').style.visibility="hidden";
+        }   
+}
+</script>
+
+
+
+
+
+<!--//Div para finalizar la cola -->
+</div>
+<style>
+    .cola{
+        width: 48%;
+        /*background-color:darkgrey;*/
+        float: left;
+    }
+    .pila{
+        /*background-color: burlywood;*/
+        float: left;
+        width: 48%;
+    }
+    button{
+        border-top-color: dimgrey;
+        border-bottom-color: black;
+        border-radius: 3px;
+    }
+</style>
+
+<!--Div para finalizar el cuerpo de la pagina -->
+</div>
+</body>
+</body>
+</html>
